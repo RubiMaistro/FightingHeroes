@@ -1,19 +1,23 @@
+using Microsoft.EntityFrameworkCore;
+using WebApi.Interfaces.Repositories;
+using WebApi.Repositories;
+
 namespace WebApi
 {
     public class Program
     {
+        private static WebApplicationBuilder? _builder { get; set; }
+        private static ConfigurationManager? _config { get; set; }
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            _builder = WebApplication.CreateBuilder(args);
+            _config = _builder.Configuration;
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            AddServices(_builder.Services);
 
-            var app = builder.Build();
+            var app = _builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -30,6 +34,21 @@ namespace WebApi
 
             app.Run();
 
+        }
+
+        private static void AddServices(IServiceCollection services)
+        {
+            services.AddDbContext<HeroContext>(options =>
+                options.UseSqlServer(_config?.GetConnectionString("FightingHeroesDb")));
+
+            services.AddControllers();
+
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
+
+            // CORS enabled
+            services.AddCors();
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         }
     }
 }
