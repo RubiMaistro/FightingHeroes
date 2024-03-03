@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public HeroHealthType HeroType { get; set; }
         public double Health { get; set; }
+        public int BattleId { get; set; }
         /// <summary>
         /// Performs the attack and get the dead hero
         /// </summary>

@@ -1,6 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using WebApi.Interfaces.Repositories;
-using WebApi.Repositories;
 
 namespace WebApi
 {
@@ -49,6 +47,7 @@ namespace WebApi
             // CORS enabled
             services.AddCors();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddScoped<IBattleHandlingService, BattleHandlingService>();
         }
     }
 }

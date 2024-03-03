@@ -11,7 +11,7 @@ using WebApi.DataObjects;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(HeroContext))]
-    [Migration("20240303210209_addBattleAndRoundModel")]
+    [Migration("20240303230338_addBattleAndRoundModel")]
     partial class addBattleAndRoundModel
     {
         /// <inheritdoc />
@@ -24,6 +24,25 @@ namespace WebApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("WebApi.Models.Battle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("NumberOfHeores")
+                        .HasColumnType("float");
+
+                    b.Property<int>("WinnerHeroId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Battles");
+                });
+
             modelBuilder.Entity("WebApi.Models.Hero", b =>
                 {
                     b.Property<int>("Id")
@@ -31,6 +50,9 @@ namespace WebApi.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BattleId")
+                        .HasColumnType("int");
 
                     b.Property<double>("Health")
                         .HasColumnType("float");
@@ -41,6 +63,25 @@ namespace WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Heroes");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Round", b =>
+                {
+                    b.Property<int>("RoundNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoundNumber"));
+
+                    b.Property<int>("AttackerHeroId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DefenderHeroId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoundNumber");
+
+                    b.ToTable("Rounds");
                 });
 #pragma warning restore 612, 618
         }

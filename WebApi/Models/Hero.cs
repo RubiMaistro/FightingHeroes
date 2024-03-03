@@ -11,6 +11,7 @@ namespace WebApi.Models
         [Required]
         public HeroHealthType HeroType { get; set; }
         public double Health { get; set; }
+        public int BattleId { get; set; }
 
         public virtual IHero Attack(IHero defenderHero)
         {
@@ -47,6 +48,11 @@ namespace WebApi.Models
                     }
                     break;
             }
+                            
+            if (Health != 0)
+                Health = Health > (int)HeroType / 4 ? Health / 2 : 0;
+            else
+                defenderHero.Health = defenderHero.Health > (int)defenderHero.HeroType / 4 ? defenderHero.Health / 2 : 0;
             return defenderHero;
         }
         

@@ -9,6 +9,8 @@ namespace WebApi.DataObjects
         {
         }
         public DbSet<Hero>? Heroes { get; set; }
+        public DbSet<Round>? Rounds { get; set; }
+        public DbSet<Battle>? Battles { get; set; }
 
         public HeroContext()
         {

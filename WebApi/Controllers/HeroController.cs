@@ -7,18 +7,18 @@ namespace WebApi.Controllers
     public class HeroController : Controller
     {
         private readonly IRepositoryWrapper _repository;
-        public HeroController(IRepositoryWrapper epositoryWrapper)
+        public HeroController(IRepositoryWrapper repositoryWrapper)
         {
-            _repository = epositoryWrapper;
+            _repository = repositoryWrapper;
         }
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Hero>))]
         public IActionResult Get()
         {
-            var foods = _repository.HeroRepository.FindAll();
-            if (foods != null)
-                return Ok(foods);
+            var heroes = _repository.HeroRepository.FindAll();
+            if (heroes != null)
+                return Ok(heroes);
 
             return NotFound();
         }
@@ -27,12 +27,12 @@ namespace WebApi.Controllers
         [ProducesResponseType(200, Type = typeof(Hero))]
         public IActionResult Get(int id)
         {
-            var food = _repository.HeroRepository
+            var hero = _repository.HeroRepository
                 .FindByCondition(x => x.Id.Equals(id))
                 .FirstOrDefault();
 
-            if (food != null)
-                return Ok(food);
+            if (hero != null)
+                return Ok(hero);
 
             return NotFound();
         }

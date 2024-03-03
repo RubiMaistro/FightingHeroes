@@ -2,7 +2,7 @@
 
 namespace WebApi.Repositories
 {
-    public class RepositoryWrapper : IRepositoryWrapper
+    public class RepositoryWrapper : IRepositoryWrapper, IDisposable
     {
         private HeroContext _context;
         private IHeroRepository _heroRepository;
@@ -50,6 +50,11 @@ namespace WebApi.Repositories
         public void Save()
         {
             _context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }
