@@ -6,6 +6,8 @@ namespace WebApi.Repositories
     {
         private HeroContext _context;
         private IHeroRepository _heroRepository;
+        private IRoundRepository _roundRepository;
+        private IBattleRepository _battleRepository;
         public IHeroRepository HeroRepository
         {
             get
@@ -15,6 +17,28 @@ namespace WebApi.Repositories
                     _heroRepository = new HeroRepository(_context);
                 }
                 return _heroRepository;
+            }
+        }
+        public IRoundRepository RoundRepository
+        {
+            get
+            {
+                if (_roundRepository == null)
+                {
+                    _roundRepository = new RoundRepository(_context);
+                }
+                return _roundRepository;
+            }
+        }
+        public IBattleRepository BattleRepository
+        {
+            get
+            {
+                if (_battleRepository == null)
+                {
+                    _battleRepository = new BattleRepository(_context);
+                }
+                return _battleRepository;
             }
         }
 

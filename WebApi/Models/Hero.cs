@@ -9,26 +9,46 @@ namespace WebApi.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public HeroType HeroType { get; set; }
+        public HeroHealthType HeroType { get; set; }
         public double Health { get; set; }
 
-        public Hero(int id, HeroType heroType)
+        public virtual IHero Attack(IHero defenderHero)
         {
-            Id = id;
-            HeroType = heroType;
-            switch (heroType)
+            if (defenderHero.HeroType == HeroType)
+                defenderHero.Health = 0;
+            switch (HeroType)
             {
-                case HeroType.Bowman:
-                    Health = 100;
+                case HeroHealthType.Bowman:
+                    switch (defenderHero.HeroType)
+                    {
+                        case HeroHealthType.Swordsman:
+                            defenderHero.Health = 0;
+                            break;
+                        case HeroHealthType.Rider:
+                            var random = new Random();
+                            if (random.Next(1, 100) <= 40)
+                                defenderHero.Health = 0;
+                            break;
+                    }
                     break;
-                case HeroType.Swordsman:
-                    Health = 120;
+                case HeroHealthType.Swordsman:
+                    if (defenderHero.HeroType == HeroHealthType.Bowman)
+                        defenderHero.Health = 0;
                     break;
-                case HeroType.Rider:
-                    Health = 150;
+                case HeroHealthType.Rider:
+                    switch (defenderHero.HeroType)
+                    {
+                        case HeroHealthType.Bowman:
+                            defenderHero.Health = 0;
+                            break;
+                        case HeroHealthType.Swordsman:
+                            Health = 0;
+                            return this; // attacker hero is dead
+                    }
                     break;
             }
+            return defenderHero;
         }
-
+        
     }
 }
