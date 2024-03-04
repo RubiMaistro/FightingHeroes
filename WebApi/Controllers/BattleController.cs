@@ -29,14 +29,15 @@ namespace WebApi.Controllers
         }
         [HttpPost]
         [ProducesResponseType(200, Type = typeof(int))]
+        [ProducesResponseType(400, Type = typeof(string))]
         public IActionResult Post([FromQuery] int count)
         {
             var battleCreate = new Battle()
             {
                 NumberOfHeores = count
             };
-            if (battleCreate == null || battleCreate.NumberOfHeores < 2)
-                return BadRequest(battleCreate);
+            if (battleCreate.NumberOfHeores < 2)
+                return BadRequest("The number of heroes must be greater than or equal to 2");
 
             var existingBattle = _repository.BattleRepository
                 .FindByCondition(x => x.Id == battleCreate.Id)
