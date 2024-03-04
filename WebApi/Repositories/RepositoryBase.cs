@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using WebApi.Interfaces.Repositories;
 
 namespace WebApi.Repositories
 {
@@ -23,5 +22,10 @@ namespace WebApi.Repositories
         public void Create(T entity) => HeroContext.Set<T>().Add(entity);
         public void Update(T entity) => HeroContext.Set<T>().Update(entity);
         public void Delete(T entity) => HeroContext.Set<T>().Remove(entity);
+
+        public void Dispose()
+        {
+            HeroContext?.Dispose();
+        }
     }
 }

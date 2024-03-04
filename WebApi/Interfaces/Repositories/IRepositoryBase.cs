@@ -2,7 +2,7 @@
 
 namespace WebApi.Interfaces.Repositories
 {
-    public interface IRepositoryBase<T>
+    public interface IRepositoryBase<T> : IDisposable
     {
         /// <summary>
         /// Get all T object from database

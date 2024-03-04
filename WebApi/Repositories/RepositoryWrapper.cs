@@ -45,6 +45,9 @@ namespace WebApi.Repositories
         public RepositoryWrapper(HeroContext heroContext)
         {
             _context = heroContext;
+            _heroRepository = new HeroRepository(_context);
+            _roundRepository= new RoundRepository(_context);
+            _battleRepository = new BattleRepository(_context);
         }
 
         public void Save()
@@ -54,7 +57,10 @@ namespace WebApi.Repositories
 
         public void Dispose()
         {
-            
+            _context?.Dispose();
+            _heroRepository?.Dispose();
+            _roundRepository?.Dispose();
+            _battleRepository?.Dispose();
         }
     }
 }
